@@ -8,7 +8,7 @@
         <div *ngIf="message.senderId == recipientId">
           <span class="chat-img float-left">
             <img
-              src="{{ message.senderPhotoUrl }}"
+              src="{{ message.senderPhotoUrl || '../../../assets/user.png' }}"
               alt="{{ message.senderKnownAs }}"
               class="rounded-circle"
             />
@@ -19,18 +19,18 @@
                 message.senderKnownAs
               }}</strong>
               <small class="text-muted float-right">
-                <span class="fa fa-clock-o">{{
-                  message.messageSent | timeago
-                }}</span>
+                <span class="fa fa-clock-o">
+                  {{ message.messageSent | timeago }}</span
+                >
               </small>
             </div>
-            <p>{{ message.content }}</p>
+            <p>&nbsp;{{ message.content }}</p>
           </div>
         </div>
         <div *ngIf="message.senderId != recipientId">
           <span class="chat-img float-right">
             <img
-              src="{{ message.senderPhotoUrl }}"
+              src="{{ message.senderPhotoUrl || '../../../assets/user.png' }}"
               alt="{{ message.senderKnownAs }}"
               class="rounded-circle"
             />
@@ -48,9 +48,9 @@
                   (read {{ message.dateRead | timeago }})
                 </span>
               </small>
-              <strong class="primary-font float-right mr-1"
-                >{{ message.senderKnownAs }}
-              </strong>
+              <strong class="primary-font float-right"
+                >{{ message.senderKnownAs }}&nbsp;</strong
+              >
             </div>
             <p>{{ message.content }}</p>
           </div>
@@ -59,7 +59,11 @@
     </ul>
   </div>
   <div class="card-footer">
-    <form #messageForm="ngForm" (ngSubmit)="messageForm.valid && sendMessage()">
+    <form
+      #messageForm="ngForm"
+      autocomplete="off"
+      (ngSubmit)="messageForm.valid && sendMessage()"
+    >
       <div class="input-group">
         <input
           [(ngModel)]="newMessage.content"

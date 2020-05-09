@@ -34,6 +34,9 @@ export class MemberMessagesComponent implements OnInit, AfterViewChecked {
   ngOnInit(): void {
     this.loadMessages()
     this.scrollToBottom()
+    setInterval(() => {
+      this.loadMessages()
+    }, 1000)
   }
 
   ngAfterViewChecked() {
